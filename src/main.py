@@ -4,6 +4,7 @@ from fastapi.responses import RedirectResponse
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from dotenv import load_dotenv
 import httpx
+from supabase import create_client, Client
 
 load_dotenv()
 
@@ -11,6 +12,8 @@ CLIENT_ID     = os.getenv('QB_CLIENT_ID')
 CLIENT_SECRET = os.getenv('QB_CLIENT_SECRET')
 REALM_ID      = os.getenv('QB_REALM_ID')
 REDIRECT_URI  = os.getenv('QB_REDIRECT_URI')
+SUPABASE_URL  = os.getenv('SUPABASE_URL')
+SUPABASE_KEY  = os.getenv('SUPABASE_SERVICE_ROLE_KEY')
 
 app = FastAPI(title="QuickBooks Proxy API")
 
@@ -22,6 +25,9 @@ oauth.register(
     server_metadata_url='https://oauth.platform.intuit.com/.well-known/openid_sandbox',
     client_kwargs={'scope': 'com.intuit.quickbooks.accounting'},
 )
+
+# Initialize Supabase client
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # Simple in-memory store for demo; swap for Redis/session in prod
 token_store = {}
@@ -58,4 +64,7 @@ async def get_aging_report():
     async with httpx.AsyncClient() as client:
         resp = await client.get(url, headers=headers, params=params)
         resp.raise_for_status()
-        return resp.json()
+        data = resp.json()
+        # Upsert the report data into Supabase table "aging_reports"
+        supabase.table('aging_reports').insert(data).execute()
+        return data
