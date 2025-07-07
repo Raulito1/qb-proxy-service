@@ -8,3 +8,45 @@ poetry.lock
 
 # VSCode / IDE
 .vscode/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment variables and credentials
+.env
+.env.*
+
+# VSCode / IDE files
+.vscode/
+.idea/
+*.swp
+
+# Pytest cache and coverage reports
+.pytest_cache/
+.coverage
+
+# MyPy
+.mypy_cache/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# macOS
+.DS_Store

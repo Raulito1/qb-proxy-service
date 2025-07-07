@@ -1,0 +1,38 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# Distribution/build folders
+build/
+dist/
+*.egg-info/
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+
+# Git metadata
+.git
+.gitignore
+
+# Environment files
+.env
+.env.*
+
+# Dockerfiles and ignore (not needed in image)
+Dockerfile
+.dockerignore
+
+# Test/coverage
+.pytest_cache/
+.coverage
+
+# Supabase credentials (if any)
+supabase/
